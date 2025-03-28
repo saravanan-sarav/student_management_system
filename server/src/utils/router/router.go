@@ -2,6 +2,7 @@ package router
 
 import (
 	"sms/config"
+	"sms/middlewares"
 	"sms/routes"
 
 	"github.com/gin-gonic/gin"
@@ -9,6 +10,7 @@ import (
 
 func Init() {
 	route := gin.Default()
+	route.Use(middlewares.CORSMiddleware())
 	routes.PingRoutes(route)
 	routes.AuthRoutes(route)
 	routes.AttendanceRoutes(route)
