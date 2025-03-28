@@ -18,8 +18,6 @@ type DB struct {
 	*gorm.DB
 }
 
-
-
 func Init() {
 	sqlDB, err := sql.Open("mysql", config.Conf.DatabaseURL)
 
@@ -33,25 +31,24 @@ func Init() {
 	sqlDB.SetConnMaxLifetime(10)
 
 	db, err = gorm.Open(mysql.Open(config.Conf.DatabaseURL), &gorm.Config{})
-	
+
 	if err != nil {
 		log.Fatal("Unable to create GORM content", err)
 	}
-	fmt.Print("DB CONNECTED SUCCESSFULLY")
-	
+	fmt.Println("DB CONNECTED SUCCESSFULLY")
+
 	err = autoMigrate()
 
 	if err != nil {
 		log.Fatal("GORM Unable to create tables. Auto Migrate Failed.", err)
 	}
-	
-	fmt.Print("AUTOMIGRATED SUCCESSFULLY")
+
+	fmt.Println("AUTOMIGRATED SUCCESSFULLY")
 
 }
 
-
 func autoMigrate() error {
-	return db.AutoMigrate(&models.Users{})
+	return db.AutoMigrate(&models.Student{}, &models.Auth{}, &models.AttendanceEntry{}, &models.WorkDoneEntry{}, &models.LeaveEntry{})
 }
 
 func New() *DB {
