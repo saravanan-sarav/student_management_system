@@ -7,7 +7,7 @@ import (
 	"sms/config"
 	"sms/constants"
 	"sms/db"
-	"sms/utils/token"
+	"sms/utils/router"
 )
 
 func main() {
@@ -21,10 +21,7 @@ func main() {
 		log.Fatal("unable to parse json", err)
 	}
 
-	fmt.Println(config.Conf)
-
 	db.Init()
-
-	fmt.Println(token.GetAuthCode(config.Conf.TokenSize))
+	router.Init()
 
 }
